@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertisseur de Devises - Service Express</title>
+    
+    <!-- Script Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1805732481707409" crossorigin="anonymous"></script>
+
+    <style>
+        :root { --primary: #6c5ce7; --bg: #f0f3f7; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h1 { color: #2d3436; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #636e72; font-weight: bold; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #dfe6e9; border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        input:focus { border-color: var(--primary); }
+        .result-box { margin-top: 25px; padding: 20px; background: #f9f9ff; border-radius: 10px; border: 1px solid #e0e0ff; }
+        #resVal { font-size: 1.8rem; font-weight: bold; color: var(--primary); display: block; }
+        #resText { color: #636e72; margin-top: 5px; font-size: 0.9rem; }
+        button { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Convertisseur de Devises</h1>
+    
+    <div class="input-group">
+        <label>Montant</label>
+        <input type="number" id="amount" placeholder="Ex: 100" value="100">
+    </div>
+
+    <div class="input-group">
+        <label>De</label>
+        <select id="from">
+            <option value="EUR">Euro (€)</option>
+            <option value="USD">Dollar ($)</option>
+            <option value="GBP">Livre Sterling (£)</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>Vers</label>
+        <select id="to">
+            <option value="USD" selected>Dollar ($)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="GBP">Livre Sterling (£)</option>
+        </select>
+    </div>
+
+    <button onclick="convert()">Convertir</button>
+
+    <div class="result-box">
+        <span id="resVal">---</span>
+        <div id="resText">Entrez un montant</div>
+    </div>
+
+    <!-- Zone AdSense -->
+    <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1805732481707409"
+             data-ad-slot="auto"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+    </div>
+</div>
+
+<script>
+    // Taux fixes simplifiés (à titre indicatif)
+    const rates = {
+        EUR: { USD: 1.08, GBP: 0.85, EUR: 1 },
+        USD: { EUR: 0.92, GBP: 0.79, USD: 1 },
+        GBP: { EUR: 1.17, USD: 1.26, GBP: 1 }
+    };
+
+    function convert() {
+        const amt = document.getElementById('amount').value;
+        const from = document.getElementById('from').value;
+        const to = document.getElementById('to').value;
+        
+        if(amt > 0) {
+            const result = (amt * rates[from][to]).toFixed(2);
+            document.getElementById('resVal').innerText = result + ' ' + to;
+            document.getElementById('resText').innerText = amt + ' ' + from + ' vaut environ ' + result + ' ' + to;
+        }
+    }
+    // Lancement au chargement
+    window.onload = convert;
+</script>
+
+</body>
+</html>
